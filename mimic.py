@@ -68,7 +68,21 @@ def create_mimic_dict(filename):
             }
     """
     # +++your code here+++
-
+    with open(filename, 'r') as f:
+        read_data = f.read()
+        words = read_data.split()
+        mimic_dict = {}
+        prev_word = ''
+        for word in words:
+            if prev_word == '':
+                mimic_dict[prev_word] = [word]
+            elif prev_word not in mimic_dict:
+                mimic_dict[prev_word] = [word]
+            else:
+                mimic_dict[prev_word].append(word)
+            prev_word = word
+        print mimic_dict
+    
 
 def print_mimic(mimic_dict, start_word):
     """Given a previously compiled mimic_dict and start_word, prints 200 random words:
@@ -78,7 +92,13 @@ def print_mimic(mimic_dict, start_word):
         - Repeat this process 200 times
     """
     # +++your code here+++
-    pass
+    for index in range(200):
+        print start_word,
+        next_word = mimic_dict.get(start_word)
+        if not next_word:
+            next_word = mimic_dict['']
+        start_word = random.choice(next_word)
+        
 
 
 # Provided main(), calls mimic_dict() and mimic()
